@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Doctrine\ORM\EntityManagerInterface;
-
+use Symfony\Component\HttpFoundation\Request;
 
 #[Route('/api/books', name: 'api_books_')]
 final class BookController extends AbstractController
@@ -32,6 +32,24 @@ final class BookController extends AbstractController
         $em->flush();
         return $this->json($book);
     }
+    #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
+    public function delete(Book $book,EntityManagerInterface $em ): JsonResponse
+    {
+        $em->remove($book);
+        $em->flush(); //envoyer la requête à la base de données
+        return $this->json($book);
+    } 
+
+    #[Route('/{id}' ,name:'update',methods:['PUT','PATCH'])]
+    public function update(Book $book, EntityManagerInterface $em,Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true); //true pour obtenir un tableau associatif
+        if(isset($data['titre'])){$book->setTitre($data['titre']);}
+        if (isset($data['read'])){$book->setRead($data['read']);}
+        if (isset($data['rating'])){$book->setRating($data['rating']);}  
+        $em->flush();
+        return $this->json($book);   
+}
 }
 
   
