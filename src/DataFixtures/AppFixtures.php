@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Books;
+use App\Entity\Book;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -10,7 +10,7 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $Books =
+        $Book =
             [
                 ['titre' => 'React', 'read' => false, 'rating' => 4],
                 ['titre' => 'Dune', 'read' => true, 'rating' => 1],
@@ -18,9 +18,9 @@ class AppFixtures extends Fixture
                 ['titre' => 'Base de données', 'read' => false, 'rating' => 1]
             ];
 
-        foreach ($Books as $b) {
+        foreach ($Book as $b) {
 
-            $book = new Books();
+            $book = new Book();
 
             $book->setTitre($b['titre']);
             $book->setRead($b['read']);

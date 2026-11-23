@@ -21,7 +21,7 @@ final class BookController extends AbstractController
         return $this->json($books);
     }
     #[Route('/{id}', name: 'find', methods: ['GET'])]
-    public function show(Books $book): JsonResponse
+    public function show(Book $book): JsonResponse
     {
         return $this->json($book);
     }  
